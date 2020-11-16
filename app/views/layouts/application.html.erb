@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Paydemo</title>
+    <!-- <%= csrf_meta_tags %>
+    <%= csp_meta_tag %> -->  
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="nav nav-pills mb-3">
+      <div class="nav-item">
+        <%=  !current_user ? button_to('sign up', new_user_path, method: :get, class: "nav-item nav-link active") : '' %>
+      </div>
+
+      <div class="nav-item">
+        <%=  current_user ? button_to('logout', logout_path, method: :delete, class: "nav-item nav-link active") : '' %>
+      </div>
+
+      <div class="nav-item">
+        <%=  current_user ? button_to('home', items_path(@items), method: :get, class: "nav-item nav-link") : '' %>
+      </div>
+
+      <div class="nav-item">
+        <%=  current_user ? button_to("#{current_user.full_name}👤", current_user, method: :get, class: "nav-item nav-link active") : '' %>
+      </div>
+      <div class="nav-item">
+        <%=  current_user&&current_user.full_name != "Sekou Dosso" ? 
+             button_to("Shop 🛒 #{ShoppingcartItem.all.select {|elmnt| elmnt.shoppingcart.user_id == current_user.id }.length}", shoppingcarts_path, method: :get, class: "nav-item nav-link active") : '' %>
+      </div>
+      <div class="nav-item">
+        <%=  current_user&&current_user.full_name == "Sekou Dosso" ? 
+          button_to('Sell New Item', new_item_path, method: :get, class: "nav-item nav-link"): "" %>
+      </div>
+      
+
+    </nav>
+    <%= yield %>
+    <div class="footer">
+      <p>Sekou Dosso &copy;</p>
+    </div>
+
+  </body>
+</html>

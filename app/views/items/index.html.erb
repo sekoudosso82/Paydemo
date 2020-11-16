@@ -1,0 +1,39 @@
+<!-- <h1> All Items</h1> -->
+
+<div class="index-container">
+
+    <% @items.each do |item| %>
+        <div class="index-tile">
+                <% if current_user != item.user %>
+                        <h2><%= link_to "More details", item %></h2>    
+                <% end %>
+            
+            <h2><%= item.description %> </h2>
+            <h2>Price: $<%= item.price %> </h2>
+            <img class="index-img" src="<%= item.img_url %>" alt="<%= item.description %>">
+
+            <% if current_user == item.user %>
+                    <%= button_to 'Edit item', edit_item_path(item), method: :get %> 
+            <% end %> 
+
+            <% if current_user == item.user %>
+                    <%= button_to 'Delete', item_path(item), method: :delete %> 
+            <% end %>
+           
+            <div >
+                    <% if current_user != item.user %>
+                    <script src="https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.js"></script>
+
+                    <div id="dropin-container"></div>
+                    <button id="submit-button" class="button button--small button--green">Purchase</button>   
+                    <% end %> 
+                    
+                    <% if current_user != item.user %>
+                        <%= button_to "Add to cart", add_to_cart_path(item.id), method: :post %>
+                    <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>
+
+  

@@ -1,0 +1,33 @@
+<div class="container">
+  <h2><%= link_to 'Go Back', items_path %> </h2>
+  <h2><strong>Description</strong> : <%= @item.description %> </h2>
+  <h3><strong>Price</strong> : $<%= @item.price %> </h3>
+  <img class="show-img" src="<%= @item.img_url %>" alt="<%= @item.description %>">
+  
+  <% if current_user == @user %>
+    <%= button_to 'Edit item', edit_item_path(@item), method: :get , class: "btn" %>
+  <% end %>
+  
+</div>
+
+<div class="container">
+  <% if current_user.id != @item.user_id %>
+  <button id="buyNowBtn">Buy Now</button>
+<% end %> 
+
+<% if current_user.id != @item.user_id %>
+    <button id="addShopBtn">add cart</button>
+<% end %>
+</div>
+<!-- <form id="checkout" method="post" action="/checkout">
+  <div id="paymen-form"></div>
+  <input type="submit" value="Pay $10">
+</form>
+
+<script src="https://js.braintreegateway.com/js/braintree-2.20.0.min.js"></script>
+<script>
+  var clientToken = "<%= @token %>";
+  braintree.setup(clientToken, "dropin", {
+    container: "payment-form"
+  });
+</script> -->
